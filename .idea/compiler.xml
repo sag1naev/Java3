@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+<<<<<<< HEAD
         <module name="newmod" />
         <module name="logtest" />
       </profile>
@@ -13,6 +14,15 @@
     <bytecodeTargetLevel>
       <module name="logtest" target="1.8" />
       <module name="newmod" target="1.8" />
+=======
+        <module name="task2" />
+        <module name="task1" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="task1" target="7" />
+      <module name="task2" target="8" />
+>>>>>>> origin/master
     </bytecodeTargetLevel>
   </component>
 </project>
