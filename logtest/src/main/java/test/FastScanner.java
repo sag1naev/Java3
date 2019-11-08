@@ -15,6 +15,11 @@ public class FastScanner {
         buffer = new char[4096];
     }
 
+    public FastScanner(File is) throws FileNotFoundException {
+        br = new BufferedReader(new FileReader(is));
+        buffer = new char[4096];
+    }
+
     private void readBuffer() throws IOException{
         len = br.read(buffer);
         if (len == -1){
