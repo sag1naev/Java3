@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,13 +27,25 @@ public class DBTests {
         }
     }
 
+    @After
+    public void closer(){
+        try {
+            stmt.close();
+            con.close();
+        }catch (Exception ignored){
+
+        }
+
+    }
+
     @Test
     public void testTable() throws SQLException {
-        util.createPrinterTable(stmt);
+        stmt.execute("DROP TABLE IF EXISTS Printer");
+        util.createPrinterTable(con, stmt);
         ResultSet res = stmt.executeQuery("SELECT * FROM Printer");
-        res.last();
-        int size = res.getRow();
-        Assert.assertEquals(3, size);
+        int cnt = 0;
+        while (res.next())cnt++;
+        Assert.assertEquals(3, cnt);
     }
 
     @Test
@@ -59,7 +72,7 @@ public class DBTests {
 
     @Test
     public void maxCostTest(){
-        int max = util.makerWithMaxProceeds();
+        int max = util.makerWithMaxProceeds(stmt);
         Assert.assertEquals(140000, max);
     }
 
