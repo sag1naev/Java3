@@ -1,3 +1,5 @@
+
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -14,6 +16,8 @@ public class DBUtility {
     3 1010 bw jet 5000 (производитель Canon)
     Каждая вставка в таблицу принтер должна отражаться добавлением записи в таблицу продукт
      */
+
+
 
     public void createPrinterTable(Connection con, Statement  stmt){
         //TODO
@@ -39,12 +43,14 @@ public class DBUtility {
     }
 
     /*
-     * Метод должен вернуть список производителей которые делают и пк и ноутбуки
+     * Метод должен вернуть список производителей которые
+     *  делают и пк и ноутбуки
      */
     public ArrayList<String> selectMaker(Statement stmt){
         //TODO
         return null;
     }
+
     /*
      * Метод должен вернуть максимальную среди всех произодителей
      * суммарную стоимость всех изделий типов ноутбук или компьютер,
@@ -53,6 +59,7 @@ public class DBUtility {
      * и отгрупировать по сумме прайсов после чего выбрать максимум
      * или сделать любым другим способом
      */
+
     public int makerWithMaxProceeds(Statement stmt){
         //TODO
         return 0;
