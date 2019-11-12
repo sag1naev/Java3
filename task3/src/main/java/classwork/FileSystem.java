@@ -7,7 +7,10 @@ import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FileSystem {
 
@@ -35,6 +38,12 @@ public class FileSystem {
 //        writeData(f, true);
         writeUser(f, new User(12, "Mike"));
         System.out.println(readUser(f));
+        BufferedReader br = new BufferedReader(new FileReader(new File(path + "nfile.txt")));
+        br.lines().filter(x->!x.isEmpty())
+                .map(String::trim)
+                .flatMap(x-> Stream.of(x.split(" ")))
+                .forEach(System.out::println);
+
     }
 
     static void writeUser(File file, User user) throws IOException {
