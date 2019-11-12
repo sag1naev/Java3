@@ -18,22 +18,7 @@ public class DBUtility {
      */
 
 
-    private void InsertNewPrinterToDB(Statement stmt, Printer printer) throws SQLException {
-        stmt.execute("INSERT INTO Printer (model, color, type, price) VALUES ("+ printer.getModel()+", '" + printer.getColor()+"', '" +printer.getType() + "', " + printer.getPrice()+")");
-        stmt.execute("INSERT INTO Product (maker, model, type) VALUES ('" + printer.getMaker()+ "', " + printer.getModel() + ", '" + printer.getType() +"')");
-    }
 
-    private void AddPrinters(Statement stmt) throws SQLException {
-        Printer[] Printers = new Printer[] {
-                new Printer(1012, "HP" ,"col", "laser", 20000),
-                new Printer(1010, "Canon", "bw", "jet", 5000)};
-
-        for (Printer printer :
-                Printers) {
-            InsertNewPrinterToDB(stmt, printer);
-        }
-        InsertNewPrinterToDB(stmt, Printers[1]);//добавляем второй принтер повторно согласно условий задачи
-    }
 
     public void createPrinterTable(Connection con, Statement  stmt){
         try {
