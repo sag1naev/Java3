@@ -20,7 +20,8 @@ public class TaskRunner implements Runnable{
 
     public TaskRunner(Object mutex, String msg, int cnt) {
         this.mutex = mutex;
-        message = msg;
+        message = msg; //каждый поток может писать в список только
+        //его сообщение!!!
         this.cnt = cnt;
         inc = 0;
     }

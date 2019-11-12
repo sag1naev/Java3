@@ -20,6 +20,8 @@ public class ThreadTest {
 
     @Test
     public void checkList(){
+        //тест длится 30 секунд и запускается 3 раза
+        //чтобы хоть немножко исключить везение)))
         for (int j = 0; j < 3; j++) {
             TaskRunner [] runners = new TaskRunner[3];
             Thread [] threads = new Thread[3];
