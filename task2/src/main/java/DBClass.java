@@ -25,10 +25,5 @@ public class DBClass {
             User u = new User(i+1, "Ivan " + (i + 1));
             stmt.executeUpdate("INSERT INTO users(id, name) VALUES (" + u.getId() +", '" +u.getName() +"');");
         }
-        //System.out.println(Arrays.toString(ps.executeBatch()));
-        //rs = stmt.executeQuery("SELECT * FROM users");
-//        while (rs.next()){
-//            System.out.println(rs.getInt(1) + " " + rs.getString(2));
-//        }
     }
 }

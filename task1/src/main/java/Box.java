@@ -1,40 +1,48 @@
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.ArrayList;
+import java.util.Collection;
 
-public class Box<T> {
+public class Box<T extends Fruit> {
 
-    //используте ArrayList для хранения фруктов
-/*
-* a. Есть классы Fruit -> Apple, Orange;(больше фруктов не надо)
-b. Класс Box в который можно складывать фрукты, коробки условно сортируются по типу фрукта, поэтому в одну коробку нельзя сложить и яблоки, и апельсины;
-c. Для хранения фруктов внутри коробки можете использовать ArrayList;
-d. Сделать метод getWeight() который высчитывает вес коробки, зная количество фруктов и вес одного фрукта(вес яблока - 1.0f, апельсина - 1.5f, не важно в каких это единицах);
-e. Внутри класса коробка сделать метод compare, который позволяет сравнить текущую коробку с той, которую подадут в compare в качестве параметра, true - если их веса равны, false в противном случае(коробки с яблоками мы можем сравнивать с коробками с апельсинами);
-f. Написать метод, который позволяет пересыпать фрукты из текущей коробки в другую коробку(помним про сортировку фруктов, нельзя яблоки высыпать в коробку с апельсинами), соответственно в текущей коробке фруктов не остается, а в другую перекидываются объекты, которые были в этой коробке;
-g. Не забываем про метод добавления фрукта в коробку.
-* */
+    private ArrayList<T> fruits;
+    private float weight;
+    private T inst;
+
+    public Box() {
+        fruits = new ArrayList<>();
+        weight = 0;
+    }
 
     public boolean compareTo(Box<? extends Fruit> other) {
-        //TODO
-        //this <-> other
-        //if this.summary weight > other.summary weight
-        // then true
-        return false;
+        return getWeight() > other.getWeight();
     }
 
     public void addFruit(T fruit) {
-        //TODO
+        inst = fruit;
+        weight += fruit.getWeight();
+        fruits.add(fruit);
     }
 
-    public void dropFruits(Box<?> otherBox) {
-        //TODO
-        //otherBox -> this
+    public void dropFruits(@NotNull Box<? extends Fruit> otherBox) {
+        if (inst.getClass() != otherBox.inst.getClass()) {
+            throw new DropException();
+        }
+        for (Fruit fruit : otherBox.fruits) {
+            addFruit((T) fruit);
+        }
+        otherBox.fruits.clear();
+        otherBox.weight = 0;
+    }
+
+    public ArrayList<T> getFruits() {
+        return fruits;
     }
 
     public double getWeight() {
-        return 0;
+        return weight;
     }
-
 
 }
 

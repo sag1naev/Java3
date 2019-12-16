@@ -1,6 +1,6 @@
 
 
-public class DropException extends Exception {
+public class DropException extends RuntimeException {
 
     @Override
     public String getMessage() {
