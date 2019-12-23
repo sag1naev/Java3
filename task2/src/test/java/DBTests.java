@@ -19,7 +19,7 @@ public class DBTests {
         try {
             util = new DBUtility();
             Class.forName("org.sqlite.JDBC");
-            con = DriverManager.getConnection("jdbc:sqlite:/Users/liliakobleva/Developer/Java/Java3/homework.db");
+            con = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Mikhail\\IdeaProjects\\Java31\\homework.db");
             stmt = con.createStatement();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

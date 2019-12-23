@@ -41,7 +41,7 @@ public class DBUtility {
      * которых выше чем 2500
      */
 
-    public ArrayList<Integer> selectQuickLaptop(Statement stmt){
+    public ArrayList<Integer> selectQuickLaptop(Statement stmt) {
         // TODO: 16.12.2019  
         return null;
     }
@@ -51,8 +51,17 @@ public class DBUtility {
      *  делают и пк и ноутбуки
      */
     public ArrayList<String> selectMaker(Statement stmt){
-        //todo
-        return null;
+        ArrayList<String> ans = new ArrayList<>();
+        try {
+            ResultSet rs = stmt.executeQuery("select maker, count(maker) as counter from \n" +
+                    "(select DISTINCT * from product) group by maker having counter >= 2;");
+            while (rs.next()) {
+                ans.add(rs.getString("maker"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ans;
     }
 
     /*
@@ -66,7 +75,17 @@ public class DBUtility {
 
     public int makerWithMaxProceeds(Statement stmt){
         int result = 0;
-        //todo
+        try {
+            ResultSet rs = stmt.executeQuery("SELECT MAX(SUMM) as ANS from(select DISTINCT maker, sum(price) as SUMM from \n" +
+                    "(select distinct id, maker, price from PC join Product on pc.model = product.model\n" +
+                    "UNION\n" +
+                    "select distinct id, maker, price from Laptop join Product on Laptop.model = product.model) \n" +
+                    "group by maker);");
+            rs.next();
+            result = rs.getInt("ANS");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return result;
 
     }
