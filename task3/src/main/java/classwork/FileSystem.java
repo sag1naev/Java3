@@ -1,16 +1,8 @@
 package classwork;
 
-import jdk.management.resource.internal.inst.FileInputStreamRMHooks;
-
-import java.io.*;
-import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class FileSystem {
 
