@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class TaskRunner implements Runnable{
+public class TaskRunner implements Runnable {
 
     //TODO
 
@@ -18,6 +18,8 @@ public class TaskRunner implements Runnable{
     //в список будут писать из 3 потоков
     static volatile LinkedList<String> list = new LinkedList<>();
 
+
+    
     public TaskRunner(Object mutex, String msg, int cnt) {
         this.mutex = mutex;
         message = msg; //каждый поток может писать в список только
@@ -28,14 +30,9 @@ public class TaskRunner implements Runnable{
 
     @Override
     public void run() {
-        while(inc < 20) {
+        // TODO: 26.12.2019
+        while (true) {
             list.add(message);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            inc++;
         }
     }
 

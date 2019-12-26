@@ -7,59 +7,75 @@ public class Ex1 {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
 
-        Object mutex = new Object();
+        class Runner implements Runnable {
 
-        Thread t1 = new Thread(() -> {
-            synchronized (mutex) {
-                while (true) {
-                    mutex.notify();
-                    System.out.print("A ");
+            boolean running;
+
+            public Runner() {
+                running = true;
+            }
+
+            synchronized public void stop() {
+                running = false;
+            }
+
+            @Override
+            public void run() {
+                while (running) {
                     try {
                         Thread.sleep(500);
-                        mutex.wait();
-                        //mutex.notify();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    System.out.print("*");
                 }
             }
-        });
-        Thread t2 = new Thread(() -> {
-            synchronized (mutex) {
+        }
+
+        Runner run = new Runner();
+
+        class CustomThread extends Thread {
+
+            int cnt;
+
+            public CustomThread() {
+                cnt = 0;
+            }
+
+            synchronized int getCounter() {
+                return cnt;
+            }
+
+            @Override
+            public void run() {
+                super.run();
                 while (true) {
-                    mutex.notify();
-                    System.out.print("B ");
                     try {
-                        Thread.sleep(500);
-                        mutex.wait();
-                        //mutex.notify();
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    cnt++;
                 }
             }
-        });
+        }
 
-        ExecutorService service = Executors
-                .newFixedThreadPool(8);
-//        for (int i = 0; i < 8; i++) {
-//            int finalI = i;
-//            service.execute(()->{
-//                    System.out.print((char)('A' + finalI));
-//                    try {
-//                        Thread.sleep(500);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//            });
-//        }
-        Future<String> future = service.submit(() -> {
-            for (long i = 0; i < 10000000000L; i++) {
+        CustomThread ct = new CustomThread();
+        ct.start();
 
+        new Thread(run).start();
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+                run.stop();
+                while (true) {
+                    Thread.sleep(500);
+                    System.out.println(ct.getCounter());
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            return "The End";
-        });
-        System.out.println(future.get());
-        service.shutdown();
+        }).start();
     }
 }
