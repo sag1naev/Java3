@@ -2,10 +2,7 @@ import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TaskRunner implements Runnable {
-
-    //TODO
-
-    Object mutex;   //монитор синхронизации
+    final Object mutex;   //монитор синхронизации
     String message; //сообщение которое поток будет добавлять в список
 
     //у вас могут быть другие решения и другие переменные
@@ -19,7 +16,6 @@ public class TaskRunner implements Runnable {
     static volatile LinkedList<String> list = new LinkedList<>();
 
 
-    
     public TaskRunner(Object mutex, String msg, int cnt) {
         this.mutex = mutex;
         message = msg; //каждый поток может писать в список только
@@ -30,9 +26,20 @@ public class TaskRunner implements Runnable {
 
     @Override
     public void run() {
-        // TODO: 26.12.2019
-        while (true) {
-            list.add(message);
+        while (iter < 9) {
+            synchronized (mutex) {
+                if ((iter % 3) == cnt) {
+                    list.add(message);
+                    iter++;
+                    mutex.notifyAll();
+                } else {
+                    try {
+                        mutex.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 
